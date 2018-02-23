@@ -1,0 +1,117 @@
+@import 'normalize',
+'variables',
+'mixin',
+'placeholder',
+'fonts',
+'compass/css3';
+
+html,
+body,
+#app {
+  @extend %width-height;
+}
+
+.stage {
+  @include position;
+  @extend %width;
+  height: $stage-h;
+  background: $stage-bg-color;
+  overflow: hidden;
+  @at-root .img-sec {
+    @include position;
+    @extend %width-height;
+    background: $stage-bg-color;
+    -webkit-perspective: 600;
+            perspective: 600;
+    @at-root .imgFig {
+      @include position(absolute);
+      margin: 0;
+      width: $imgFig-w;
+      height: auto;
+      padding: $imgFig-pad;
+      background: $imgFig-bg-color;
+      @include box-sizing(border-box);
+      @include transform-origin(0, 50%, 0);
+      @include transform-style(preserve-3d);
+      @include transition(transform .5s, left .6s, top .6s);
+      img {
+        @extend %width;
+        height: inherit;
+      }
+      .title {
+        @extend %width;
+        text-align: center;
+        font-family: 'ET';
+        font-size: $title-size;
+        color: $title-color;
+        margin-top: 6%;
+        h2 {
+          margin: 0;
+        }
+      }
+      @at-root .img-back {
+        @include position(absolute);
+        left: 0;
+        top: 0;
+        @extend %width-height;
+        background: $imgFig-bg-color;
+        @include transform(translate(1px) rotateY(180deg));
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        h2 {
+          margin: 0;
+          font-family: 'ET';
+          font-size: 80%;
+          color: $title-color;
+          text-align: center;
+          margin-top: 50%;
+        }
+      }
+      &.is-center {
+        @include box-shadow(0 0 10px #b3b3b3);
+      }
+      &.is-inverse {
+        @include transform(translate(100%) rotateY(180deg));
+      }
+    }
+  }
+  @at-root .controller-nav {
+    @include position(absolute);
+    left: 0;
+    bottom: $controller-distance;
+    @extend %width;
+    height: auto;
+    text-align: center;
+    @at-root .controller-span {
+      @include inline-block;
+      width: $controller-span-w;
+      height: $controller-span-w;
+      background: $controller-span-color;
+      @include border-radius(50%);
+      margin: 0 $controller-pad;
+      @include transform(scale(.5));
+      @include transition(transform .5s, background .5s);
+
+      &.is-center {
+        @include transform(scale(1));
+        background: $span-center-color;
+        &::after {
+          font-family: 'icon-arrow';
+          color: $imgFig-bg-color;
+          text-align: center;
+          line-height: $controller-span-w;
+          font-size: 120%;
+          content: '\e6cb';
+
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        &.is-inverse {
+          @include transform(rotateY(180deg));
+          background: $span-inverse-color;
+        }
+      }
+    }
+  }
+}
